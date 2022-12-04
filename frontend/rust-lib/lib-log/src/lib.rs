@@ -30,7 +30,7 @@ impl Builder {
 
         Builder {
             name: name.to_owned(),
-            env_filter: "Info".to_owned(),
+            env_filter: "trace".to_owned(),
             file_appender: tracing_appender::rolling::daily(directory, local_file_name),
         }
     }
@@ -41,7 +41,8 @@ impl Builder {
     }
 
     pub fn build(self) -> std::result::Result<(), String> {
-        let env_filter = EnvFilter::new(self.env_filter);
+        // let env_filter = EnvFilter::new(self.env_filter);
+        let env_filter = EnvFilter::new("trace");
 
         let (non_blocking, guard) = tracing_appender::non_blocking(self.file_appender);
         let subscriber = tracing_subscriber::fmt()

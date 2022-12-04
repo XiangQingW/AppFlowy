@@ -57,7 +57,7 @@ impl FlowySDKConfig {
         FlowySDKConfig {
             name: name.to_owned(),
             root: root.to_owned(),
-            log_filter: crate_log_filter("info".to_owned()),
+            log_filter: crate_log_filter("trace".to_owned()),
             server_config,
             document: DocumentConfig::default(),
         }
@@ -82,7 +82,7 @@ fn crate_log_filter(level: String) -> String {
     filters.push(format!("flowy_user={}", level));
     filters.push(format!("flowy_document={}", level));
     filters.push(format!("flowy_grid={}", level));
-    filters.push(format!("flowy_collaboration={}", "info"));
+    filters.push(format!("flowy_collaboration={}", level));
     filters.push(format!("dart_notify={}", level));
     filters.push(format!("lib_ot={}", level));
     filters.push(format!("lib_ws={}", level));
@@ -91,9 +91,9 @@ fn crate_log_filter(level: String) -> String {
     filters.push(format!("flowy_revision={}", level));
     // filters.push(format!("lib_dispatch={}", level));
 
-    filters.push(format!("dart_ffi={}", "info"));
-    filters.push(format!("flowy_database={}", "info"));
-    filters.push(format!("flowy_net={}", "info"));
+    filters.push(format!("dart_ffi={}", level));
+    filters.push(format!("flowy_database={}", level));
+    filters.push(format!("flowy_net={}", level));
     filters.join(",")
 }
 

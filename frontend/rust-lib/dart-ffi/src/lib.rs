@@ -23,7 +23,7 @@ pub extern "C" fn init_sdk(path: *mut c_char) -> i64 {
     let path: &str = c_str.to_str().unwrap();
 
     let server_config = get_client_server_configuration().unwrap();
-    let config = FlowySDKConfig::new(path, "appflowy", server_config).log_filter("info");
+    let config = FlowySDKConfig::new(path, "appflowy", server_config).log_filter("trace");
     FLOWY_SDK.get_or_init(|| FlowySDK::new(config));
 
     0
@@ -32,6 +32,7 @@ pub extern "C" fn init_sdk(path: *mut c_char) -> i64 {
 #[no_mangle]
 pub extern "C" fn async_event(port: i64, input: *const u8, len: usize) {
     let request: AFPluginRequest = FFIRequest::from_u8_pointer(input, len).into();
+
     log::trace!(
         "[FFI]: {} Async Event: {:?} with {} port",
         &request.id,
